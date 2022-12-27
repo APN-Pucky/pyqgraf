@@ -10,8 +10,25 @@ def glob_re(pattern, strings):
     return list(filter(re.compile(pattern).match, strings))
 
 
-def install(version="3.4.2"):
+import contextlib
+
+
+@contextlib.contextmanager
+def pushd(new_dir):
+    previous_dir = os.getcwd()
+    os.chdir(new_dir)
+    try:
+        yield
+    finally:
+        os.chdir(previous_dir)
+
+
+def install(version="3.6.5", reinstall=False):
     global qgraf_path
+    qgraf_path = os.path.expanduser(f"~/.local/bin/qgraf-{version}")
+    if not reinstall and os.path.exists(qgraf_path):
+        return
+
     import tempfile
     from skbuild import cmaker
 
@@ -35,34 +52,36 @@ def install(version="3.4.2"):
                 "Could not identify qgraf source files: " + str(filenames)
             )
         filename = filenames[0]
+        #shutil.copy(tmpdirname + "/" + filename, tmpdirname + "/qgraf.f")
 
-        open(tmpdirname + "CMakeLists.txt", "w").write(
+        open(tmpdirname + "/CMakeLists.txt", "w").write(
             (
                 f"""
 cmake_minimum_required(VERSION 3.1)
 enable_language(Fortran)
 project(qgraf)
+set_source_files_properties({filename} PROPERTIES LANGUAGE Fortran)
 add_executable(qgraf {filename})
 install(TARGETS qgraf)
 """
             )
         )
+        with pushd(tmpdirname):
+            maker = cmaker.CMaker()
 
-        maker = cmaker.CMaker(cmake_source_dir=tmpdirname)
+            maker.configure(
+                ["-DCMAKE_INSTALL_PREFIX=" + tmpdirname],
+            )
 
-        maker.configure(["-DCMAKE_INSTALL_PREFIX=" + tmpdirname])
-
-        maker.make()
-        qgraf_path = f"~/.local/bin/qgraf-{version}"
+            maker.make()
+        qgraf_path = os.path.expanduser(f"~/.local/bin/qgraf-{version}")
 
         os.makedirs(os.path.expanduser("~/.local/bin"), exist_ok=True)
-        shutil.copy(tmpdirname + "/bin/qgraf", os.path.expanduser(qgraf_path))
+        shutil.copy(tmpdirname + "/bin/qgraf", qgraf_path)
 
 
 if qgraf_path is None:
-    qgraf_path = "~/.local/bin/qgraf"
-    if not os.path.exists(qgraf_path):
-        install()
+    install()
 
 
 warnings.warn(
@@ -84,6 +103,8 @@ import subprocess
 
 
 def call(dat="qgraf.dat"):
+    global qgraf_path
+    print(f"{qgraf_path} {dat}")
     subprocess.call(shlex.split(f"{qgraf_path} {dat}"))
 
 
@@ -98,7 +119,7 @@ def run(
     output=None,
     fstyle="tmp.sty",
     fmodel="tmp.model",
-    fdat="tmp.dat",
+    fdat="qgraf.dat",
     foutput="output.out",
     prefix_path=None,
     **kwargs,
