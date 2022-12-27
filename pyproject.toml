@@ -10,7 +10,7 @@ repository = "https://github.com/APN-Pucky/pyqgraf"
 python = "^3.8"
 scikit-build = "*"
 requests ="*"
-smpl = "*"
+smpl_io = "*"
  
 
 [tool.poetry.group.dev]

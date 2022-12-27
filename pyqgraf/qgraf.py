@@ -3,24 +3,11 @@ import os
 import warnings
 import re
 
+from smpl_io import io
+import shlex
+import subprocess
+
 qgraf_path = shutil.which("qgraf")
-
-
-def glob_re(pattern, strings):
-    return list(filter(re.compile(pattern).match, strings))
-
-
-import contextlib
-
-
-@contextlib.contextmanager
-def pushd(new_dir):
-    previous_dir = os.getcwd()
-    os.chdir(new_dir)
-    try:
-        yield
-    finally:
-        os.chdir(previous_dir)
 
 
 def install(version="3.6.5", reinstall=False):
@@ -46,13 +33,13 @@ def install(version="3.6.5", reinstall=False):
         open(tmpdirname + "qgraf.tgz", "wb").write(r.content)
         tarfile.open(tmpdirname + "qgraf.tgz").extractall(tmpdirname)
 
-        filenames = glob_re(r"qgraf.*\.(f|f08)", os.listdir(tmpdirname))
+        filenames = io.glob_re(r"qgraf.*\.(f|f08)", tmpdirname)
         if len(filenames) != 1:
             raise RuntimeError(
                 "Could not identify qgraf source files: " + str(filenames)
             )
         filename = filenames[0]
-        #shutil.copy(tmpdirname + "/" + filename, tmpdirname + "/qgraf.f")
+        # shutil.copy(tmpdirname + "/" + filename, tmpdirname + "/qgraf.f")
 
         open(tmpdirname + "/CMakeLists.txt", "w").write(
             (
@@ -66,7 +53,7 @@ install(TARGETS qgraf)
 """
             )
         )
-        with pushd(tmpdirname):
+        with io.pushd(tmpdirname):
             maker = cmaker.CMaker()
 
             maker.configure(
@@ -96,10 +83,6 @@ warnings.warn(
 
 	"""
 )
-
-from smpl import io
-import shlex
-import subprocess
 
 
 def call(dat="qgraf.dat"):
