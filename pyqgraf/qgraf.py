@@ -91,7 +91,7 @@ def run(
     in_,
     out,
     loops,
-    loop_momementum,
+    loop_momentum,
     options="notadpole,onshell",
     style=None,
     model=None,
@@ -143,7 +143,7 @@ def run(
  in= {in_};
  out= {out};
  loops= {loops};
- loop_momentum= {loop_momementum};
+ loop_momentum= {loop_momentum};
  options= {options};
      """
         + args,
