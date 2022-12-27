@@ -48,7 +48,7 @@ install(TARGETS qgraf)
             )
         )
 
-        maker = cmaker.CMaker()
+        maker = cmaker.CMaker(cmake_source_dir=tmpdirname)
 
         maker.configure(["-DCMAKE_INSTALL_PREFIX=" + tmpdirname])
 
