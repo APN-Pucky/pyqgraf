@@ -145,4 +145,7 @@ test.log
 test.pdf
 
 qgraf.d
-
+tmp.sty
+tmp.model
+output.out
+qgraf.dat
