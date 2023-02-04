@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyqgraf"
-version = "0.0.0"
+version = "0.0.4"
 description = "PyQgraf is a Python wrapper for Qgraf, a Feynman diagram generator."
 authors = ["Alexander Puck Neuwirth <alexander@neuwirth-informatik.de>"]
 readme = "README.md"

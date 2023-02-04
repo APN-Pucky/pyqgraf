@@ -2,11 +2,14 @@
 import codecs
 import re
 
+# The default begin and end strings for wrapping.
+# These are chosen to be unlikely to appear in a model.
+# The content between the begin and end strings is a hex representation of the
+# original string.
 DEFAULT_BEGIN = "i"
 DEFAULT_END = "i"
 
 
-# src: https://stackoverflow.com/a/29026749
 def wrap(s):
     str = s.encode("utf-8")
     return str.hex()
@@ -18,6 +21,7 @@ def dewrap(s):
 
 def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
     """Wrap a qgraf model with illegal characters in the name."""
+    wrap_dict = {}
     chars = "".join(str(n) for n in range(10)) + "abcdefg"
     rs = ""
     for line in model.splitlines():
@@ -30,7 +34,8 @@ def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
                 contents[i] = contents[i].strip()
             for i in range(len(contents)):
                 if contents[i] != "+" and contents[i] != "-":
-                    contents[i] = begin + wrap(contents[i]) + end
+                    wrap_dict[contents[i]] = wrap(contents[i])
+                    contents[i] = begin + wrap_dict[contents[i]] + end
             rs += (
                 line[: line.index("[") + 1]
                 + ",".join(contents)
@@ -38,14 +43,16 @@ def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
             )
         else:
             rs += line
-    return rs
+    return rs, wrap_dict
 
 
-def dewrap_all(str, begin=DEFAULT_BEGIN, end=DEFAULT_END):
-    for match in re.finditer(
-        re.escape(begin) + r"([a-f0-9]+)" + re.escape(end), str
-    ):
-        str = str.replace(match.group(0), dewrap(match.group(1)))
+def dewrap_all(str, wrap_dict = None, begin=DEFAULT_BEGIN, end=DEFAULT_END):
+    if wrap_dict is None:
+        for match in re.finditer(re.escape(begin) + r"([a-f0-9]+)" + re.escape(end), str):
+            str = str.replace(match.group(0), dewrap(match.group(1)))
+    else:
+        for key in wrap_dict:
+            str = str.replace(begin + wrap_dict[key] + end, key)
     return str
 
 

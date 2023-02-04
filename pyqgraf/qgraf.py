@@ -13,6 +13,7 @@ qgraf_path = shutil.which("qgraf")
 
 
 def install(version="3.6.5", reinstall=False):
+    """Install qgraf locally if not already installed."""
     global qgraf_path
     qgraf_path = os.path.expanduser(f"~/.local/bin/qgraf-{version}")
     if not reinstall and os.path.exists(qgraf_path):
@@ -88,6 +89,7 @@ warnings.warn(
 
 
 def call(dat="qgraf.dat"):
+    """Call qgraf with the given dat file."""
     global qgraf_path
     print(f"{qgraf_path} {dat}")
     subprocess.call(shlex.split(f"{qgraf_path} {dat}"))
@@ -136,7 +138,10 @@ def run(
         foutput = prefix_path + foutput
     if model is not None:
         if wrap:
-            model = wrap_model(model)
+            model,wrapd = wrap_model(model)
+            for k,v in wrapd.items():
+                in_.replace(k,v)
+                out.replace(k,v)
         io.write(fmodel, model, create_dir=False)
     if style is not None:
         io.write(fstyle, style, create_dir=False)
