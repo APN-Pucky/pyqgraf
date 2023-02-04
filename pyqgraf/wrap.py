@@ -40,6 +40,7 @@ def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
                 line[: line.index("[") + 1]
                 + ",".join(contents)
                 + line[line.index("]") :]
+                + "\n"
             )
         else:
             rs += line
