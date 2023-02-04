@@ -7,6 +7,8 @@ from smpl_io import io
 import shlex
 import subprocess
 
+from pyqgraf.wrap import dewrap_all, wrap_model
+
 qgraf_path = shutil.which("qgraf")
 
 
@@ -105,6 +107,7 @@ def run(
     fdat="qgraf.dat",
     foutput="output.out",
     prefix_path=None,
+    wrap=True,
     **kwargs,
 ):
     """
@@ -132,6 +135,8 @@ def run(
         fdat = prefix_path + fdat
         foutput = prefix_path + foutput
     if model is not None:
+        if wrap:
+            model = wrap_model(model)
         io.write(fmodel, model, create_dir=False)
     if style is not None:
         io.write(fstyle, style, create_dir=False)
@@ -156,4 +161,7 @@ def run(
     # remove output file if it exists
     io.remove(foutput)
     call(fdat)
-    return io.read(foutput)
+    ret = io.read(foutput)
+    if wrap and model is not None:
+        ret = dewrap_all(ret)
+    return ret
