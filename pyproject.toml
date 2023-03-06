@@ -17,7 +17,7 @@ smpl_io = "*"
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^2.20.0"
+pre-commit = ">=2.20,<4.0"
 poetry-dynamic-versioning = {extras = ["plugin"], version = "^0.21.1"}
 
 [build-system]
