@@ -23,7 +23,6 @@ def install(version="3.6.5", reinstall=False):
     from skbuild import cmaker
 
     with tempfile.TemporaryDirectory() as tmpdirname:
-
         import tarfile
         import requests
 
@@ -88,11 +87,15 @@ warnings.warn(
 )
 
 
-def call(dat="qgraf.dat"):
+def call(dat="qgraf.dat",silent=True):
     """Call qgraf with the given dat file."""
     global qgraf_path
-    print(f"{qgraf_path} {dat}")
-    subprocess.call(shlex.split(f"{qgraf_path} {dat}"))
+    # print(f"{qgraf_path} {dat}")
+    subprocess.call(
+        shlex.split(f"{qgraf_path} {dat}"),
+        stdout=subprocess.DEVNULL if silent else subprocess.STDOUT,
+        stderr=subprocess.STDOUT,
+    )
 
 
 def run(
@@ -110,6 +113,7 @@ def run(
     foutput="output.out",
     prefix_path=None,
     wrap=True,
+    silent=True,
     **kwargs,
 ):
     """
@@ -128,6 +132,7 @@ def run(
         fmodel (str): model file
         fdat (str): dat file
         foutput (str): output file
+        silent (bool): suppress qgraf output
 
 
     """
@@ -138,10 +143,10 @@ def run(
         foutput = prefix_path + foutput
     if model is not None:
         if wrap:
-            model,wrapd = wrap_model(model)
-            for k,v in wrapd.items():
-                in_.replace(k,v)
-                out.replace(k,v)
+            model, wrapd = wrap_model(model)
+            for k, v in sorted(wrapd.items(), key=lambda x: len(x[0]), reverse=True):
+                in_ = in_.replace(k, v)
+                out = out.replace(k, v)
         io.write(fmodel, model, create_dir=False)
     if style is not None:
         io.write(fstyle, style, create_dir=False)
@@ -165,7 +170,7 @@ def run(
     )
     # remove output file if it exists
     io.remove(foutput)
-    call(fdat)
+    call(fdat,silent)
     ret = io.read(foutput)
     if wrap and model is not None:
         ret = dewrap_all(ret)

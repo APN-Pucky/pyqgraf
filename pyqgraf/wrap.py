@@ -34,8 +34,8 @@ def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
                 contents[i] = contents[i].strip()
             for i in range(len(contents)):
                 if contents[i] != "+" and contents[i] != "-":
-                    wrap_dict[contents[i]] = wrap(contents[i])
-                    contents[i] = begin + wrap_dict[contents[i]] + end
+                    wrap_dict[contents[i]] = begin +wrap(contents[i])+ end
+                    contents[i] =  wrap_dict[contents[i]] 
             rs += (
                 line[: line.index("[") + 1]
                 + ",".join(contents)
@@ -47,13 +47,15 @@ def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
     return rs, wrap_dict
 
 
-def dewrap_all(str, wrap_dict = None, begin=DEFAULT_BEGIN, end=DEFAULT_END):
+def dewrap_all(str, wrap_dict=None, begin=DEFAULT_BEGIN, end=DEFAULT_END):
     if wrap_dict is None:
-        for match in re.finditer(re.escape(begin) + r"([a-f0-9]+)" + re.escape(end), str):
+        for match in re.finditer(
+            re.escape(begin) + r"([a-f0-9]+)" + re.escape(end), str
+        ):
             str = str.replace(match.group(0), dewrap(match.group(1)))
     else:
         for key in wrap_dict:
-            str = str.replace(begin + wrap_dict[key] + end, key)
+            str = str.replace(wrap_dict[key], key)
     return str
 
 
