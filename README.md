@@ -7,7 +7,10 @@ Simplified plotting and fitting in python.
 
 ## Documentation
 
-...
+## Requirements
+
+ * build-essential (or just gfortran)
+ * ninja-build (maybe cmake works too) 
 
 ## Versions
 
