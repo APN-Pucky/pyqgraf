@@ -1280,25 +1280,28 @@ requests = ">=2.0.1,<3.0.0"
 
 [[package]]
 name = "scikit-build"
-version = "0.16.4"
+version = "0.17.1"
 description = "Improved build system generator for Python C/C++/Fortran/Cython extensions"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "scikit-build-0.16.4.tar.gz", hash = "sha256:2a20c4adeab3c2aec11d70bce9690995cff0e53beafe321a7b530009aca8e731"},
-    {file = "scikit_build-0.16.4-py3-none-any.whl", hash = "sha256:c7041071d1b75a23754a54688e9cbe7c45b86197e1ac09dc472bd254246fc5ab"},
+    {file = "scikit_build-0.17.1-py3-none-any.whl", hash = "sha256:63129e7fb404a0e2eae303d87e5e308aa7c2fca94174736c5e47f9486d05ac42"},
+    {file = "scikit_build-0.17.1.tar.gz", hash = "sha256:17e716b29c8d3eb99edeadb0b8f7c2cd7683993aeb00e50c6db84b6d8765386c"},
 ]
 
 [package.dependencies]
 distro = "*"
 packaging = "*"
 setuptools = ">=42.0.0"
+tomli = {version = "*", markers = "python_version < \"3.11\""}
 wheel = ">=0.32.0"
 
 [package.extras]
+cov = ["coverage[toml] (>=4.2)", "pytest-cov (>=2.7.1)"]
 docs = ["pygments", "sphinx (>=4)", "sphinx-issues", "sphinx-rtd-theme (>=1.0)", "sphinxcontrib-moderncmakedomain (>=3.19)"]
-test = ["build (>=0.7)", "codecov (>=2.0.5)", "coverage (>=4.2)", "cython (>=0.25.1)", "flake8 (>=3.0.4)", "importlib-metadata", "pytest (>=6.0.0)", "pytest-cov (>=2.7.1)", "pytest-mock (>=1.10.4)", "pytest-runner (>=5.1)", "pytest-virtualenv (>=1.2.5)", "requests", "ubelt (>=0.8.2)", "virtualenv", "xdoctest (>=0.10.0)"]
+doctest = ["ubelt (>=0.8.2)", "xdoctest (>=0.10.0)"]
+test = ["build (>=0.7)", "cython (>=0.25.1)", "importlib-metadata", "pytest (>=6.0.0)", "pytest-mock (>=1.10.4)", "pytest-virtualenv (>=1.2.5)", "requests", "virtualenv"]
 
 [[package]]
 name = "secretstorage"
@@ -1391,7 +1394,7 @@ smpl_doc = "*"
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
