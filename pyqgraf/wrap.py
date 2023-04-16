@@ -44,6 +44,7 @@ def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
             )
         else:
             rs += line
+    # we need the wrap dict to be able to wrap the input for qgraf
     return rs, wrap_dict
 
 
