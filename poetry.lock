@@ -1280,14 +1280,14 @@ requests = ">=2.0.1,<3.0.0"
 
 [[package]]
 name = "scikit-build"
-version = "0.17.1"
+version = "0.17.2"
 description = "Improved build system generator for Python C/C++/Fortran/Cython extensions"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "scikit_build-0.17.1-py3-none-any.whl", hash = "sha256:63129e7fb404a0e2eae303d87e5e308aa7c2fca94174736c5e47f9486d05ac42"},
-    {file = "scikit_build-0.17.1.tar.gz", hash = "sha256:17e716b29c8d3eb99edeadb0b8f7c2cd7683993aeb00e50c6db84b6d8765386c"},
+    {file = "scikit_build-0.17.2-py3-none-any.whl", hash = "sha256:ff3824281b84366fe3fcba859b8147ef0a71a831d09d7f28c33bd7aedbb7fe51"},
+    {file = "scikit_build-0.17.2.tar.gz", hash = "sha256:348cfd2137c68cbf9fa589ed74fd07b0340a65a1888e2481cfc63356485188a6"},
 ]
 
 [package.dependencies]
