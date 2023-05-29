@@ -1377,18 +1377,19 @@ deprecation = "*"
 
 [[package]]
 name = "smpl-io"
-version = "1.1.0"
+version = "1.1.2"
 description = "simple input and output for python"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "smpl_io-1.1.0-py3-none-any.whl", hash = "sha256:c3d02775cbff67b38134694cd2a5d9e83bd1f36e1dc93754d34b1fba87d3bc34"},
-    {file = "smpl_io-1.1.0.tar.gz", hash = "sha256:b4180d9a6a753b57e3cf6fe895fe66803f91ed568705bdafad20ac041c5749c8"},
+    {file = "smpl_io-1.1.2-py3-none-any.whl", hash = "sha256:96ff3bf438343268d638e3090163dcc7ee04da1a1fd1b1cb00087da8298f1882"},
+    {file = "smpl_io-1.1.2.tar.gz", hash = "sha256:19c8ac274008aa5b2eda0face643794a8936148bf74ed7478d6d983b76e6c9e3"},
 ]
 
 [package.dependencies]
-smpl_doc = "*"
+requests = "*"
+smpl_doc = ">=1.0.5,<2.0.0"
 
 [[package]]
 name = "tomli"
