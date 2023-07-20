@@ -1,6 +1,5 @@
 import shutil
 import os
-import warnings
 import re
 
 from smpl_io import io
@@ -73,7 +72,7 @@ if qgraf_path is None:
     install()
 
 
-warnings.warn(
+print(
     """
 	Please cite the following papers if you use this code:
 
