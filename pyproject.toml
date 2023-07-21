@@ -13,6 +13,15 @@ requests ="*"
 smpl_io = "*"
  
 
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-cov =  "*"
+pytest-profiling =  "*"
+pytest-line-profiler-apn = ">=0.1.3"
+
 [tool.poetry.group.dev]
 optional = true
 
