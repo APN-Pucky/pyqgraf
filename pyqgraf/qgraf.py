@@ -42,7 +42,7 @@ def install(version="3.6.5", reinstall=False):
         filename = filenames[0]
         # shutil.copy(tmpdirname + "/" + filename, tmpdirname + "/qgraf.f")
 
-        io.write(tmpdirname + "/CMakeLists.txt"
+        io.write(tmpdirname + "/CMakeLists.txt",
             (
                 f"""
 cmake_minimum_required(VERSION 3.1)
