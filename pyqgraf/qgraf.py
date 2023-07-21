@@ -31,7 +31,7 @@ def install(version="3.6.5", reinstall=False):
             f"http://anonymous:anonymous@qgraf.tecnico.ulisboa.pt/v{sub_ver}/qgraf-{version}.tgz",
             allow_redirects=True,
         )
-        open(tmpdirname + "qgraf.tgz", "wb").write(r.content)
+        io.write(tmpdirname + "qgraf.tgz",r.content, "wb")
         tarfile.open(tmpdirname + "qgraf.tgz").extractall(tmpdirname)
 
         filenames = io.glob_re(r"qgraf.*\.(f|f08)", tmpdirname)
@@ -42,7 +42,7 @@ def install(version="3.6.5", reinstall=False):
         filename = filenames[0]
         # shutil.copy(tmpdirname + "/" + filename, tmpdirname + "/qgraf.f")
 
-        open(tmpdirname + "/CMakeLists.txt", "w").write(
+        io.write(tmpdirname + "/CMakeLists.txt"
             (
                 f"""
 cmake_minimum_required(VERSION 3.1)
@@ -52,8 +52,7 @@ set_source_files_properties({filename} PROPERTIES LANGUAGE Fortran)
 add_executable(qgraf {filename})
 install(TARGETS qgraf)
 """
-            )
-        )
+            ), "w")
         with io.pushd(tmpdirname):
             maker = cmaker.CMaker()
 
