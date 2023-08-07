@@ -113,6 +113,7 @@ def run(
     prefix_path=None,
     wrap=True,
     silent=True,
+    debug=False,
     **kwargs,
 ):
     """
@@ -167,10 +168,19 @@ def run(
         + args,
         create_dir=False,
     )
+    if debug:
+        print(f"input:  {in_}")
+        print(f"output: {out}")
+        print(f"model:  {model}")
+        print(f"wrapd:  {wrapd}")
+        # print fmodel
+        print(io.read(fmodel))
     # remove output file if it exists
     io.remove(foutput)
     call(fdat,silent)
     ret = io.read(foutput)
+    if debug:
+        print(ret)
     if wrap and model is not None:
         ret = dewrap_all(ret)
     return ret

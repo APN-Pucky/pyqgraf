@@ -11,13 +11,11 @@ DEFAULT_END = "i"
 
 
 def wrap(s):
-    str = s.encode("utf-8")
-    return str.hex()
-
+    sstr = s.encode("utf-8")
+    return str(int(sstr.hex(),16))
 
 def dewrap(s):
-    return codecs.decode(s, "hex").decode("utf-8")
-
+    return codecs.decode(str(hex(int(s))), "hex").decode("utf-8")
 
 def wrap_model(model, begin=DEFAULT_BEGIN, end=DEFAULT_END):
     """Wrap a qgraf model with illegal characters in the name."""
