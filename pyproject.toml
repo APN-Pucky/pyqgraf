@@ -43,11 +43,11 @@ pattern = '(?x)(?# ignore whitespace)^((?P<epoch>\d+)!)?(?P<base>\d+(\.\d+)*)(?#
 strict = true
 format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ base }}.{{ distance }}{% endif %}"
 
-
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = ["tests"]
-addopts = [ "-Werror", "-v", "--cov=pyqgraf", "--cov-config=.coveragerc", "--cov-append", "--cov-report=term", "--cov-report=xml", "--doctest-modules", "--ignore=docs/source/conf.py", "--ignore=debug", "--ignore=debug2" ]
+addopts = [ "-v", "--cov=pyqgraf", "--cov-config=.coveragerc", "--cov-append", "--cov-report=term", "--cov-report=xml", "--doctest-modules", "--ignore=docs/source/conf.py", "--ignore=debug", "--ignore=debug2" ]
 filterwarnings = [
-    'ignore: pkg_resources is deprecated as an API:DeprecationWarning'
+    'error',
+    "ignore :pkg_resources is deprecated as an API:DeprecationWarning",
 ]
