@@ -11,7 +11,7 @@ from pyqgraf.wrap import dewrap_all, wrap_model
 qgraf_path = shutil.which("qgraf")
 
 
-def install(version="3.5.2", reinstall=False):
+def install(version="3.5.3", reinstall=False):
     """Install qgraf locally if not already installed."""
     global qgraf_path
     qgraf_path = os.path.expanduser(f"~/.local/bin/qgraf-{version}")
