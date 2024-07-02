@@ -154,7 +154,7 @@ def test_run():
     )
 
 
-@pytest.mark.parametrize("version", ["3.6.7", "3.5.2", "3.4.2"])
+@pytest.mark.parametrize("version", ["3.6.9", "3.5.3", "3.4.2"])
 def test_run_1_1(version):
     qgraf.install(version)
     xml_string = qgraf.run(
@@ -167,7 +167,7 @@ def test_run_1_1(version):
     )
     assert xml_string == result_1_1
 
-@pytest.mark.parametrize("version", ["3.6.7", "3.5.2", "3.4.2"])
+@pytest.mark.parametrize("version", ["3.6.9", "3.5.3", "3.4.2"])
 def test_run_2_2(version):
     qgraf.install(version)
     xml_string = qgraf.run(
