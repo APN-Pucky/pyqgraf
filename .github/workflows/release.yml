@@ -20,4 +20,4 @@ jobs:
         - name: Deploy PyPI
           uses: pypa/gh-action-pypi-publish@release/v1
           with:
-            password: ${{ inputs.pypi-token }}
+            password: ${{ secrets.pypi_token }}
