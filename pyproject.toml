@@ -69,4 +69,5 @@ addopts = [ "-v", "--cov=pyqgraf", "--cov-config=.coveragerc", "--cov-append", "
 filterwarnings = [
     'error',
     "ignore: pkg_resources is deprecated as an API:DeprecationWarning",
+    "ignore:The 'wheel' package is no longer the canonical location of the 'bdist_wheel' command:DeprecationWarning",
 ]
