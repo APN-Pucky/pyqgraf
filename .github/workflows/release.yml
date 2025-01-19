@@ -17,4 +17,7 @@ jobs:
             doc: false
             coveralls: true
             codacy-api-token: ${{ secrets.CODACY_API_TOKEN }}
-            pypi-token: ${{ secrets.pypi_token }}
+        - name: Deploy PyPI
+          uses: pypa/gh-action-pypi-publish@release/v1
+          with:
+            password: ${{ inputs.pypi-token }}
