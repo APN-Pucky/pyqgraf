@@ -32,7 +32,7 @@ def install(version="3.5.3", reinstall=False):
             allow_redirects=True,
         )
         io.write(tmpdirname + "qgraf.tgz",r.content, "wb")
-        tarfile.open(tmpdirname + "qgraf.tgz").extractall(tmpdirname)
+        tarfile.open(tmpdirname + "qgraf.tgz").extractall(tmpdirname, filter="tar")
 
         filenames = io.glob_re(r"qgraf.*\.(f|f08)", tmpdirname)
         if len(filenames) != 1:
