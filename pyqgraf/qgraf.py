@@ -11,12 +11,14 @@ from pyqgraf.wrap import dewrap_all, wrap_model
 qgraf_path = shutil.which("qgraf")
 
 
-def install(version="3.5.3", reinstall=False):
+def install(version=None, reinstall=False):
     """Install qgraf locally if not already installed."""
     global qgraf_path
-    qgraf_path = os.path.expanduser(f"~/.local/bin/qgraf-{version}")
-    if not reinstall and os.path.exists(qgraf_path):
+    if version is None and not reinstall and os.path.exists(qgraf_path):
         return
+    if version is None:
+        version = "3.5.3"
+    qgraf_path = os.path.expanduser(f"~/.local/bin/qgraf-{version}")
 
     import tempfile
     from skbuild import cmaker
