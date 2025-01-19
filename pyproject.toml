@@ -1,47 +1,66 @@
-[tool.poetry]
-name = "pyqgraf"
-version = "0.0.4"
-description = "PyQgraf is a Python wrapper for Qgraf, a Feynman diagram generator."
-authors = ["Alexander Puck Neuwirth <alexander@neuwirth-informatik.de>"]
-readme = "README.md"
-repository = "https://github.com/APN-Pucky/pyqgraf"
-
-[tool.poetry.dependencies]
-python = "^3.8"
-scikit-build = "*"
-requests ="*"
-smpl_io = "*"
- 
-
-[tool.poetry.group.test]
-optional = true
-
-[tool.poetry.group.test.dependencies]
-pytest = "*"
-pytest-cov =  "*"
-pytest-profiling =  "*"
-pytest-line-profiler-apn = ">=0.1.3"
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = ">=2.20,<4.0"
-poetry-dynamic-versioning = {extras = ["plugin"], version = ">=0.21.1,<1.2.0"}
-
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = [
+  "hatchling",
+  "hatch-vcs",
+]
+build-backend = "hatchling.build"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-vcs = "git"
-style = "pep440"
-dirty = true
-# modified dunami default pattern without v
-pattern = '(?x)(?# ignore whitespace)^((?P<epoch>\d+)!)?(?P<base>\d+(\.\d+)*)(?# v1.2.3 or v1!2000.1.2)([-._]?((?P<stage>[a-zA-Z]+)[-._]?(?P<revision>\d+)?))?(?# b0)(\+(?P<tagged_metadata>.+))?$(?# +linux)'
-strict = true
-format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ base }}.{{ distance }}{% endif %}"
+[project]
+name = "pyqgraf"
+dynamic = ["version"]
+description = 'PyQgraf is a Python wrapper for Qgraf, a Feynman diagram generator.'
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = []
+authors = [
+  { name = "Alexander Puck Neuwirth", email = "alexander@neuwirth-informatik.de" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "scikit-build",
+    "requests",
+    "smpl_io",
+]
+
+[project.urls]
+Documentation = "https://github.com/APN-Pucky/pyqgraf#readme"
+Issues = "https://github.com/APN-Pucky/pyqgraf/issues"
+Source = "https://github.com/APN-Pucky/pyqgraf/"
+
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+dev = [
+    "pre-commit"
+]
+
+
+[tool.hatch]
+version.source = "vcs"
+
+[tool.hatch.envs.all]
+features = [
+  "dev",
+  "test",
+]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -50,4 +69,5 @@ addopts = [ "-v", "--cov=pyqgraf", "--cov-config=.coveragerc", "--cov-append", "
 filterwarnings = [
     'error',
     "ignore: pkg_resources is deprecated as an API:DeprecationWarning",
+    "ignore:The 'wheel' package is no longer the canonical location of the 'bdist_wheel' command:DeprecationWarning",
 ]
